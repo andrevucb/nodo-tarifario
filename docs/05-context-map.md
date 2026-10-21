@@ -29,7 +29,7 @@ flowchart TB
   TAR -.- NOT
 ```
 
-## Relaciones y datos que cruzan
+## 1. Relaciones y datos que cruzan
 
 | Relación | ¿Qué se solicita? | ¿Qué se entrega o comparte? |
 |---|---|---|
@@ -44,7 +44,7 @@ flowchart TB
 | L-09 Facturación — Cálculo | Importes de consumos adicionales facturables | Importe de horas extra y otros consumos calculados |
 | T-01 Tarifario — Notificaciones | Comunicación de cambios tarifarios | Solicitud de aviso a miembros con plan |
 
-## Por vecino: qué le pido / qué le entrego
+## 2. Por vecino: qué le pido / qué le entrego
 
 | Vecino | Le pido | Le entrego |
 |---|---|---|
@@ -55,7 +55,7 @@ flowchart TB
 | Facturación y cobros (externo) | — | Importes facturables (horas extra y consumos) |
 | Notificaciones (transversal) | Envío de avisos | Solicitud de aviso por tarifa actualizada |
 
-## Hotspots de integración
+## 3. Hotspots de integración
 
 | Código | Relación | Pregunta pendiente |
 |---|---|---|

@@ -1,6 +1,6 @@
 # Event Storming
 
-## Actualización de tarifas (Tarifario)
+## 1. Actualización de tarifas (Tarifario)
 
 ```mermaid
 flowchart LR
@@ -16,7 +16,7 @@ flowchart LR
   H((Hotspot: ¿cómo se combinan temporada y hora pico?)) -.-> C
 ```
 
-## Cálculo del precio total
+## 2. Cálculo del precio total
 
 ```mermaid
 flowchart LR
@@ -36,7 +36,7 @@ flowchart LR
   H2((H-03: ¿sobre qué tarifa se aplican los descuentos?)) -.-> C
 ```
 
-## Gestión de cotizaciones
+## 3. Gestión de cotizaciones
 
 ```mermaid
 flowchart LR
@@ -51,7 +51,7 @@ flowchart LR
   EC --> P[Política: si el cliente desea continuar, solicitar nueva cotización]
 ```
 
-## Resumen de hotspots
+## 4. Resumen de hotspots
 
 | Código | Pregunta | Proceso |
 |---|---|---|

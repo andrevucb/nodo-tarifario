@@ -1,6 +1,6 @@
 # Lenguaje ubicuo
 
-## Tarifario
+## 1. Tarifario
 
 | Término | Significado acordado | Qué NO es? | Regla o invariante asociada | Evento |
 |---|---|---|---|---|
@@ -9,7 +9,7 @@
 | **Temporada** | Período del calendario en que Dirección puede modificar tarifas de ciertos servicios. | No es hora pico (condición horaria). | Dirección puede ajustar por temporada. Combinación con hora pico: **pendiente**. | Tarifa de temporada actualizada |
 | **Hora pico** | Franja horaria de mayor demanda con tarifa diferente. | No es una temporada ni un descuento del miembro. | Dirección define las condiciones para horarios pico. Cómo se identifican: **pendiente**. | Tarifa de horario pico actualizada |
 
-## Cálculo de precio total
+## 2. Cálculo de precio total
 
 | Término | Significado acordado | Qué NO es? | Regla o invariante asociada | Evento |
 |---|---|---|---|---|
@@ -21,14 +21,14 @@
 | **Aforo** | Capacidad máxima de personas en un espacio para eventos. | No es el precio del evento ni la cantidad de servicios extra. | Influye en el precio del evento; fórmula **pendiente**. | Precio de evento calculado *(candidato)* |
 | **Servicio extra** | Servicio adicional para un evento (catering, audiovisual) que Nodo puede subcontratar. | No forma necesariamente parte del alquiler básico. | Se considera al determinar el precio del evento. | Servicio extra incorporado a la propuesta *(candidato)* |
 
-## Cotizaciones
+## 3. Cotizaciones
 
 | Término | Significado acordado | Qué NO es? | Regla o invariante asociada | Evento |
 |---|---|---|---|---|
 | **Cotización** (sinónimo de negocio: *presupuesto*) | Propuesta económica a un cliente con importe estimado y vigencia. | No es una reserva confirmada ni garantiza ocupación. | Vigencia limitada, no reserva espacios; conserva el precio mientras esté vigente. | Cotización emitida / aceptada / caducada |
 | **Vigencia de cotización** | Período en que la propuesta puede aceptarse bajo las condiciones acordadas. | No es la fecha del evento ni la duración de una reserva. | Vencido el plazo sin aceptación, caduca y se necesita una nueva propuesta. | Cotización caducada |
 
-## Polisemias y ambigüedades documentadas
+## 4. Polisemias y ambigüedades documentadas
 
 | Palabra / par | Sentido A | Sentido B | Decisión |
 |---|---|---|---|
@@ -39,7 +39,7 @@
 | **Franja** *(hipótesis)* | En Cálculo: bloque que genera importe. | En Reservas y disponibilidad: bloque de ocupación de un recurso. | **Require validacion por el experto** |
 | **Precio** *(hipótesis)* | En Cálculo: resultado de un cálculo. | En Cotizaciones: importe ofrecido y conservado durante la vigencia. | En Cotizaciones es un dato recibido del cálculo, no se recalcula. |
 
-## Relación del glosario con las fronteras
+## 5. Relación del glosario con las fronteras
 
 - **Tarifario** concentra tarifa, tarifa base, temporada y hora pico: administración de condiciones por Dirección.
 - **Cálculo de precio total** agrupa precio, franja, horas incluidas/extra, descuento, aforo y servicio extra: determinar importes concretos.
