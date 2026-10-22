@@ -41,7 +41,7 @@ flowchart TB
 | L-06 Reservas — Cotizaciones | Disponibilidad del recurso solicitado | Datos de la cotización aceptada para continuar la contratación |
 | L-07 Eventos — Cálculo | Aforo y servicios adicionales | Importe calculado para el evento |
 | L-08 Eventos — Cotizaciones | Datos del evento y sus condiciones | Propuesta económica y aceptación |
-| L-09 Facturación — Cálculo | Importes de consumos adicionales facturables | Importe de horas extra y otros consumos calculados |
+| L-09. Facturación — Cálculo | Importes de consumos adicionales facturables. | Importe correspondiente a horas extra y otros consumos calculados. |
 | T-01 Tarifario — Notificaciones | Comunicación de cambios tarifarios | Solicitud de aviso a miembros con plan |
 
 ## 2. Por vecino: qué le pido / qué le entrego
@@ -60,8 +60,14 @@ flowchart TB
 | Código | Relación | Pregunta pendiente |
 |---|---|---|
 | I-01 | Tarifario — Cálculo | ¿Cómo identificar la tarifa aplicable sin afectar precios previamente acordados? |
-| I-02 | Membresías — Cálculo | ¿Cómo consultar horas incluidas disponibles y descuentos actualizados? |
+| I-02 | Membresías — Cálculo | ¿Cómo consultar las horas incluidas disponibles y los descuentos actualizados? |
 | I-03 | Cotizaciones — Reservas | ¿Qué sucede si se acepta una cotización vigente pero el recurso ya no está disponible? |
 | I-04 | Eventos — Cálculo | ¿Cómo se comunicarán el aforo y los importes de servicios extra? |
 | I-05 | Cálculo — Facturación | ¿Cómo evitar que un mismo consumo adicional se facture dos veces? |
 | I-06 | Tarifario — Notificaciones | ¿Cómo identificar a los miembros que deben recibir el aviso? |
+
+## 4. Continuidad en la Sesión 4
+
+Las relaciones y preguntas de integración se discutirán en la Sesión 4. El esqueleto de este repositorio abarca los tres contextos de Tarifas y precios; los otros contextos representan las áreas con las que se relaciona.
+
+Ver las [decisiones de frontera](../decisiones/0001-frontera-tarifario-calculo.md) y las [reglas e invariantes](06-reglas-invariantes.md).
