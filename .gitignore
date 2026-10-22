@@ -1,0 +1,14 @@
+# Archivos temporales de edición
+*~
+*.swp
+*.swo
+~$*
+
+# Archivos locales del sistema operativo
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Archivos temporales de herramientas
+*.tmp
+*.log

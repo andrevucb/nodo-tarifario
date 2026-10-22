@@ -41,7 +41,7 @@ flowchart TB
 | L-06 Reservas — Cotizaciones | Disponibilidad del recurso solicitado | Datos de la cotización aceptada para continuar la contratación |
 | L-07 Eventos — Cálculo | Aforo y servicios adicionales | Importe calculado para el evento |
 | L-08 Eventos — Cotizaciones | Datos del evento y sus condiciones | Propuesta económica y aceptación |
-| L-09 Facturación — Cálculo | Importes de consumos adicionales facturables | Importe de horas extra y otros consumos calculados |
+| L-09 Facturación — Cálculo | Facturación necesita los importes de consumos adicionales efectivamente realizados | Cálculo entrega el importe facturable; no emite facturas ni procesa pagos |
 | T-01 Tarifario — Notificaciones | Comunicación de cambios tarifarios | Solicitud de aviso a miembros con plan |
 
 ## 2. Por vecino: qué le pido / qué le entrego
@@ -60,8 +60,23 @@ flowchart TB
 | Código | Relación | Pregunta pendiente |
 |---|---|---|
 | I-01 | Tarifario — Cálculo | ¿Cómo identificar la tarifa aplicable sin afectar precios previamente acordados? |
-| I-02 | Membresías — Cálculo | ¿Cómo consultar horas incluidas disponibles y descuentos actualizados? |
+| I-02 | Membresías — Cálculo | ¿Cómo consultar horas disponibles y descuentos actualizados, y quién registra el uso para evitar consumir dos veces el mismo beneficio? |
 | I-03 | Cotizaciones — Reservas | ¿Qué sucede si se acepta una cotización vigente pero el recurso ya no está disponible? |
 | I-04 | Eventos — Cálculo | ¿Cómo se comunicarán el aforo y los importes de servicios extra? |
 | I-05 | Cálculo — Facturación | ¿Cómo evitar que un mismo consumo adicional se facture dos veces? |
 | I-06 | Tarifario — Notificaciones | ¿Cómo identificar a los miembros que deben recibir el aviso? |
+
+## 4. Preguntas para discutir en la Sesión 4
+
+Las diez líneas del diagrama corresponden a L-01 a L-09 y T-01. Todas son simples y sin flechas. «Propios» identifica contextos del negocio Nodo, no implica que el equipo implemente a todos; el esqueleto de este repositorio abarca solo los tres de Tarifas y precios.
+
+| Hotspot | Dato o compromiso que debe protegerse | Pregunta para discutir en clase |
+|---|---|---|
+| I-01 | Precio ya acordado frente a una nueva referencia tarifaria | ¿Qué condiciones y referencia temporal usa cada operación y quién conserva el acuerdo? |
+| I-02 | Beneficios del miembro y consumo efectivamente realizado | ¿Quién informa horas disponibles y quién registra el uso, especialmente ante solicitudes simultáneas? |
+| I-03 | Diferencia entre aceptación y ocupación | ¿Cuándo se comprueba disponibilidad y qué se comunica si el recurso ya no está disponible? |
+| I-04 | Aforo, servicios solicitados e importes de extras | ¿Quién responde por esos datos y qué sucede si cambian después de cotizar? |
+| I-05 | Un mismo consumo adicional | ¿Qué información permite reconocerlo sin facturarlo dos veces? |
+| I-06 | Destinatarios del aviso tarifario | ¿Quién identifica a los miembros con plan y qué resultado del aviso necesita conocer Tarifario? |
+
+Estas preguntas se retomarán en la Sesión 4 para continuar el análisis de las relaciones entre contextos. La relación entre las fronteras y las reglas se desarrolla en las [decisiones](../decisiones/0001-frontera-tarifario-calculo.md) y el [inventario de invariantes](06-reglas-invariantes.md).
