@@ -13,7 +13,7 @@ Las preguntas comerciales y de intercambio se mantienen como hotspots con códig
 | Preguntas | Tema |
 |---|---|
 | H-01, H-03 y H-05 | Combinación de temporada y hora pico, base del descuento y posible 5 % adicional. |
-| H-02 e I-02 | Períodos, acumulación de horas no utilizadas y registro del consumo. |
+| H-02 e I-02 | Acumulación de horas no utilizadas y consulta de horas incluidas disponibles y descuentos. |
 | H-04 / I-03 | Aceptación de una propuesta cuando el recurso ya no está disponible. |
 | H-06, H-07 e I-04 | Operaciones que cruzan franjas y cálculo de eventos con aforo y servicios extra. |
 | H-08, H-09 y H-10 | Vencimiento, cambios de una propuesta y responsabilidad de emitirla. |

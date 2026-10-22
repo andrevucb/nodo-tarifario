@@ -12,9 +12,9 @@ Las reglas de precio consideran el tipo de recurso, la franja, el plan del miemb
 
 | Contexto | Responsabilidad | Señal principal de frontera |
 |---|---|---|
-| **Tarifario** | Administrar las tarifas base y sus ajustes por temporada u hora pico. Solo Dirección las modifica. | Reglas de administración y autorización propias. |
-| **Cálculo de precio total** | Determinar el importe de una operación según las tarifas y las condiciones del servicio y del miembro. | Combina datos de varios contextos; no modifica tarifas, define planes ni factura. |
-| **Cotizaciones** | Gestionar propuestas económicas con precio estimado, vigencia, aceptación y caducidad. | Ciclo de vida propio: la propuesta conserva su precio mientras está vigente y no reserva automáticamente un espacio. |
+| **Tarifario** | Administrar las tarifas (base, temporada, hora pico). Solo Dirección las modifica. | Regla de autorización propia; cambia por decisión de Dirección. |
+| **Cálculo de precio total** | Determinar el precio de una operación concreta. | Combina datos de varios contextos; ni modifica tarifas ni factura. |
+| **Cotizaciones** | Ciclo de vida de la propuesta económica (vigente, aceptada, caducada). | Ciclo de vida y reglas de vigencia propios. |
 
 Tarifario establece condiciones generales; Cálculo determina importes concretos. Cálculo obtiene un precio; Cotizaciones administra la propuesta y su vigencia. Las fronteras son una propuesta inicial que se discutirá en las próximas clases.
 
@@ -63,13 +63,13 @@ Las historias alternativas profundizan la conservación del precio de reservas c
 
 | Código | Invariante candidata |
 |---|---|
-| INV-01 | Solo Dirección puede modificar tarifas. |
-| INV-02 | Las reservas confirmadas conservan su precio ante cambios posteriores de tarifas. |
-| INV-03 | Una cotización no reserva automáticamente un recurso. |
-| INV-04 | Una cotización vigente conserva el precio originalmente ofrecido. |
-| INV-05 | No se acepta una cotización caducada. |
-| INV-06 | Las horas que exceden las incluidas se identifican como consumo adicional facturable. |
-| INV-07 | Las horas extra del plan de equipo se calculan con el descuento del miembro. |
+| INV-01 | Solo Dirección puede modificar las tarifas de Nodo. |
+| INV-02 | Una modificación tarifaria no debe alterar el precio de una reserva previamente confirmada. |
+| INV-03 | Una cotización no debe reservar automáticamente un recurso. |
+| INV-04 | Una cotización vigente debe conservar el precio originalmente ofrecido, aunque cambien las tarifas. |
+| INV-05 | No debe aceptarse una cotización que ya haya caducado. |
+| INV-06 | Las horas de sala que exceden las incluidas en una membresía deben identificarse como consumo adicional facturable. |
+| INV-07 | Las horas extra correspondientes al plan de equipo deben calcularse considerando el descuento del miembro. |
 
 Las reglas comerciales R-01 a R-06 desarrollan ajustes por temporada/hora pico, factores del precio, aforo y servicios extra, facturación mensual, condiciones para confirmar eventos y cancelación de salas. Las políticas P-01 a P-03 describen las reacciones a cambios de tarifa, consumo adicional y caducidad de cotizaciones. El detalle y los casos límite están en [docs/06-reglas-invariantes.md](docs/06-reglas-invariantes.md).
 
@@ -142,6 +142,5 @@ Estas relaciones se representan en el [context map](docs/05-context-map.md). En 
 | Solicitar cotización | Cliente | Informar servicios y condiciones de la propuesta. |
 | Emitir cotización | Responsable de emisión por definir | H-10: definir quién puede emitirla. |
 | Aceptar cotización | Cliente | INV-05: la propuesta debe estar vigente. |
-| Registrar consumo realizado | Responsable del registro de uso por definir | I-02: ¿quién registra el uso y mantiene las horas disponibles? |
+| Consultar beneficios del plan | Solicitante del cálculo | I-02: ¿cómo consultar las horas incluidas disponibles y los descuentos actualizados? |
 | Solicitar aviso de cambio tarifario | Sistema, como reacción a Tarifa actualizada | P-01; destinatarios pendientes en I-06. |
-

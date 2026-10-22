@@ -48,9 +48,9 @@ Tras validar a Dirección y registrar el cambio, el sistema solicita el aviso (P
 | F-03: comunicación al miembro | Recepción avisa manualmente | Notificaciones envía el aviso solicitado | Reduce omisiones; identificación de destinatarios pendiente: I-06. |
 | Condiciones ya acordadas | Deben respetarse mediante el procedimiento actual | Reservas y Cotizaciones conservan sus importes protegidos | INV-02 e INV-04; no es un recálculo de operaciones anteriores. |
 
-## 5. Historia alternativa: hay reservas confirmadas o cotizaciones vigentes
+## 5. Historia alternativa: actualización de tarifas con reservas confirmadas
 
-**Situación:** Dirección aumenta una tarifa mientras existe una reserva confirmada y una propuesta vigente. **Actores:** Dirección y sistema Nodo. **Objetos:** tarifa, reserva confirmada y cotización vigente.
+**Situación:** Dirección solicita modificar una tarifa cuando existen reservas confirmadas. **Actores:** Dirección y sistema Nodo. **Objetos:** tarifa y reservas confirmadas.
 
 ```mermaid
 flowchart LR
@@ -61,7 +61,9 @@ flowchart LR
   C{{INV-04: cotización vigente conserva su importe}} -.-> T
 ```
 
-Los nuevos cálculos consideran las nuevas condiciones que correspondan. Reservas mantiene el precio confirmado y Cotizaciones el importe ofrecido durante su vigencia. La conservación es una condición del negocio: no exige consultar ni modificar todas las reservas al actualizar una tarifa. Ese mecanismo queda por diseñar. La historia corresponde a **Tarifa actualizada**, no a eventos de modificación de reservas.
+Dirección solicita al sistema modificar una tarifa. Como parte del comportamiento propuesto, el sistema consulta las reservas confirmadas y actualiza el tarifario, respetando las condiciones comerciales previamente acordadas.
+
+Las reservas confirmadas conservan su precio. Los nuevos cálculos utilizan las tarifas actualizadas, salvo cuando corresponda respetar las condiciones de una cotización vigente. Esta historia complementa el evento **Tarifa actualizada** y muestra que la actualización no debe modificar los importes acordados de las reservas.
 
 ## 6. Historia alternativa: aceptación sin disponibilidad
 
@@ -75,7 +77,7 @@ flowchart LR
   S -->|4. Comunica la falta de disponibilidad| C
 ```
 
-Cotizaciones verifica su vigencia (INV-05) y conserva su importe (INV-04). **Cotización aceptada** permite continuar la contratación, pero no produce por sí sola una reserva (INV-03). El orden entre registrar la aceptación y consultar la disponibilidad queda como pregunta para la Sesión 4. Para un evento también deben cumplirse las condiciones del vecino (R-05).
+Cotizaciones verifica su vigencia (INV-05) y conserva su importe (INV-04). **Cotización aceptada** permite continuar la contratación, pero no produce por sí sola una reserva (INV-03). El cliente comunica su intención de aceptar; el sistema consulta la disponibilidad y, si el salón no está disponible, informa esa situación al cliente. Para un evento también deben cumplirse las condiciones del vecino (R-05).
 
 **Hotspot H-04 / I-03:** ¿qué alternativa debe ofrecerse cuando se acepta una propuesta vigente, pero el salón ya no está disponible? Ofrecer otra fecha, emitir una nueva propuesta o cerrar la solicitud son opciones para discutir en clase.
 
@@ -84,7 +86,7 @@ Cotizaciones verifica su vigencia (INV-05) y conserva su importe (INV-04). **Cot
 | Historia | Evento o resultado | Regla / hotspot | Frontera revelada |
 |---|---|---|---|
 | Actualización mediante el sistema | Tarifa actualizada; solicitud de aviso | INV-01, P-01, I-06 | Tarifario administra; Notificaciones comunica. |
-| Actualización con acuerdos existentes | Tarifa actualizada sin cambiar importes protegidos | INV-02, INV-04 | Tarifario cambia referencias; Reservas y Cotizaciones mantienen sus acuerdos. |
+| Actualización con reservas confirmadas | Tarifa actualizada sin cambiar importes protegidos | INV-02, INV-04 | Tarifario cambia referencias; Reservas y Cotizaciones mantienen sus acuerdos. |
 | Aceptación sin disponibilidad | Cotización aceptada; disponibilidad negativa del vecino | INV-03, INV-05, H-04 | Cotizaciones gestiona aceptación; Reservas decide ocupación. |
 
 Estas historias muestran qué conviene automatizar y qué permanece como decisión comercial. Ver [EventStorming](03-event-storming.md), [context map](05-context-map.md) y [reglas e invariantes](06-reglas-invariantes.md).

@@ -119,8 +119,13 @@ Si termina el plazo sin aceptación, ocurre **Cotización caducada**. El vencimi
 | H-01 | ¿Cómo se combinan temporada y hora pico? | Actualización de tarifas |
 | H-02 | ¿Las horas incluidas no usadas se acumulan al siguiente período? | Cálculo |
 | H-03 | ¿Sobre qué tarifa se aplican los descuentos del plan? | Cálculo |
-| H-04 | ¿Qué pasa si se acepta una cotización y el espacio ya no está disponible? | Cotizaciones; mismo problema que I-03 |
+| H-04 | ¿Qué pasa si se acepta una cotización y el espacio ya no está disponible? | Cotizaciones |
 | H-05 | ¿Cómo se aplica el posible descuento adicional del 5 % en plan de equipo? | Cálculo |
+
+### 4.1. Preguntas complementarias
+
+| Código | Pregunta | Proceso |
+|---|---|---|
 | H-06 | ¿Cómo se calcula una operación que atraviesa franjas o temporadas? | Cálculo |
 | H-07 | ¿Cuál es la fórmula del precio de evento según aforo y servicios extra? | Cálculo |
 | H-08 | ¿Qué ocurre en el instante exacto del vencimiento y qué referencia horaria se usa? | Cotizaciones |
