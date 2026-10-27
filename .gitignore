@@ -480,3 +480,8 @@ $RECYCLE.BIN/
 
 # Vim temporary swap files
 *.swp
+
+# Base SQLite local (se genera y se siembra al correr en Development)
+*.db
+*.db-shm
+*.db-wal
