@@ -25,4 +25,10 @@ public static class TarifarioModule
         using var scope = sp.CreateScope();
         await scope.ServiceProvider.GetRequiredService<TarifarioDbContext>().Database.MigrateAsync();
     }
+
+    public static async Task SeedTarifarioModuleAsync(this IServiceProvider sp)
+    {
+        using var scope = sp.CreateScope();
+        await TarifarioSeed.SembrarAsync(scope.ServiceProvider.GetRequiredService<TarifarioDbContext>());
+    }
 }

@@ -1,15 +1,66 @@
 ﻿@page
 @model IndexModel
 @{
-    ViewData["Title"] = "Nodo - Tarifas y Precios";
+    ViewData["Title"] = "Inicio";
 }
 
-<h1>Nodo - Subdominio Tarifas y Precios</h1>
-<p>Arquitectura DDD con módulos Tarifario, Cálculo de Precio Total y Cotizaciones.</p>
+<div class="nodo-encabezado mb-4">
+    <h1>Tarifas y precios</h1>
+    <p>Subdominio <strong>Supporting</strong> de Nodo. Tres bounded contexts: cada uno con su lenguaje y sus reglas.</p>
+</div>
 
-<ul>
-    <li><a asp-page="/Tarifario/Index">Tarifario</a></li>
-    <li><a asp-page="/Calculo/Index">Simular Cálculo</a></li>
-    <li><a asp-page="/Cotizaciones/Index">Cotizaciones</a></li>
-    <li><a asp-page="/Login">Login (simular rol)</a></li>
-</ul>
+<div class="row g-4">
+    <div class="col-md-4">
+        <div class="card h-100 nodo-contexto">
+            <div class="card-body d-flex flex-column">
+                <h2 class="h5">Tarifario</h2>
+                <p class="text-secondary small">Lista de precios de Nodo: tarifa base por recurso, hora pico y temporada. Solo Dirección la modifica.</p>
+                <div class="display-6">@Model.TotalTarifas</div>
+                <div class="text-secondary small mb-3">tarifas registradas</div>
+                <div class="mt-auto d-flex justify-content-between align-items-center">
+                    <span class="nodo-codigo">INV-01 · R-01</span>
+                    <a class="btn btn-primary btn-sm" asp-page="/Tarifario/Index">Ver tarifario</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card h-100 nodo-contexto">
+            <div class="card-body d-flex flex-column">
+                <h2 class="h5">Cálculo de precio total</h2>
+                <p class="text-secondary small">El precio de una operación concreta: horas incluidas del plan, horas extra y descuento del miembro.</p>
+                <div class="display-6">2</div>
+                <div class="text-secondary small mb-3">recursos de prueba para simular</div>
+                <div class="mt-auto d-flex justify-content-between align-items-center">
+                    <span class="nodo-codigo">INV-06 · INV-07</span>
+                    <a class="btn btn-primary btn-sm" asp-page="/Calculo/Index">Simular un precio</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card h-100 nodo-contexto">
+            <div class="card-body d-flex flex-column">
+                <h2 class="h5">Cotizaciones</h2>
+                <p class="text-secondary small">Propuestas con vigencia: no reservan nada y solo se aceptan mientras están vigentes.</p>
+                <div class="d-flex gap-3 mb-3">
+                    <div><div class="display-6">@Model.CotizacionesEmitidas</div><div class="text-secondary small">emitidas</div></div>
+                    <div><div class="display-6">@Model.CotizacionesAceptadas</div><div class="text-secondary small">aceptadas</div></div>
+                    <div><div class="display-6">@Model.CotizacionesCaducadas</div><div class="text-secondary small">caducadas</div></div>
+                </div>
+                <div class="mt-auto d-flex justify-content-between align-items-center">
+                    <span class="nodo-codigo">INV-03 · INV-04 · INV-05</span>
+                    <a class="btn btn-primary btn-sm" asp-page="/Cotizaciones/Index">Ver cotizaciones</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@if (User.Identity?.IsAuthenticated != true)
+{
+    <div class="alert alert-light border mt-4 mb-0">
+        Para probar «Actualizar tarifa» <a asp-page="/Login">inicia sesión</a> con el rol <strong>Dirección</strong>.
+        Con otro rol el dominio rechaza el cambio (INV-01).
+    </div>
+}

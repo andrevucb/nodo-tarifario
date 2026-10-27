@@ -23,15 +23,17 @@ public class IndexModel : PageModel
 
     public async Task OnGetAsync()
     {
-        Cotizaciones = await _ctx.Cotizaciones.ToListAsync();
+        var cotizaciones = await _ctx.Cotizaciones.ToListAsync();
+        Cotizaciones = cotizaciones.OrderByDescending(c => c.Vigencia.Emision).ToList();
     }
 
-    public async Task<IActionResult> OnPostEmitirAsync(Guid clienteId, Guid recursoId, int horas, DateTime fechaHoraInicio, Guid? clienteIdParaPlan)
+    // El mismo cliente define a quién se emite la propuesta y qué plan se usa para calcular su precio.
+    public async Task<IActionResult> OnPostEmitirAsync(Guid clienteId, Guid recursoId, int horas, DateTime fechaHoraInicio)
     {
         try
         {
-            await _servicio.EmitirAsync(clienteId, recursoId, horas, fechaHoraInicio, clienteIdParaPlan);
-            Mensaje = "Cotización emitida.";
+            await _servicio.EmitirAsync(clienteId, recursoId, horas, fechaHoraInicio, clienteId);
+            Mensaje = "Cotización emitida. Tiene 4 días de vigencia y no reserva el recurso (INV-03).";
         }
         catch (Exception ex)
         {
@@ -46,7 +48,7 @@ public class IndexModel : PageModel
         try
         {
             await _servicio.AceptarAsync(cotizacionId);
-            Mensaje = "Cotización aceptada.";
+            Mensaje = "Cotización aceptada. Para confirmar la reserva o el evento siguen haciendo falta las condiciones de cada área.";
         }
         catch (Exception ex)
         {
@@ -61,7 +63,7 @@ public class IndexModel : PageModel
         try
         {
             await _servicio.RegistrarCaducidadAsync(cotizacionId);
-            Mensaje = "Cotización marcada como caducada.";
+            Mensaje = "Caducidad registrada.";
         }
         catch (Exception ex)
         {

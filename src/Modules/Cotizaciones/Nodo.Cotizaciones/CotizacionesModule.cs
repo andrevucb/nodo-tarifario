@@ -25,4 +25,10 @@ public static class CotizacionesModule
         using var scope = sp.CreateScope();
         await scope.ServiceProvider.GetRequiredService<CotizacionesDbContext>().Database.MigrateAsync();
     }
+
+    public static async Task SeedCotizacionesModuleAsync(this IServiceProvider sp)
+    {
+        using var scope = sp.CreateScope();
+        await CotizacionesSeed.SembrarAsync(scope.ServiceProvider.GetRequiredService<CotizacionesDbContext>());
+    }
 }

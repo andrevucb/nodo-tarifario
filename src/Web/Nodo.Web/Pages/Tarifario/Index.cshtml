@@ -2,56 +2,107 @@
 @model Nodo.Web.Pages.Tarifario.IndexModel
 @{
     ViewData["Title"] = "Tarifario";
+    var esDireccion = User.IsInRole("Direccion");
 }
 
-<h2>Tarifario</h2>
-<p>Usuario: @User.Identity?.Name | Rol: @User.FindFirst(System.Security.Claims.ClaimTypes.Role)?.Value</p>
-
-<h3>Tarifarios</h3>
-<table border="1">
-    <tr><th>TarifarioId</th><th>Tarifas</th></tr>
-    @foreach (var t in Model.Tarifarios)
-    {
-        <tr>
-            <td>@t.Id</td>
-            <td>
-                <ul>
-                    @foreach (var tarifa in t.Tarifas)
-                    {
-                        <li>@tarifa.Id - @tarifa.TipoRecurso - Pico:@tarifa.EsHoraPico - @tarifa.TarifaBase.Amount @tarifa.TarifaBase.Currency</li>
-                    }
-                </ul>
-            </td>
-        </tr>
-    }
-</table>
-
-<h3>Actualizar tarifa (solo Dirección - INV-01)</h3>
-<form method="post" asp-page-handler="Actualizar">
+<div class="nodo-encabezado d-flex flex-wrap justify-content-between align-items-end gap-2 mb-4">
     <div>
-        <label>TarifarioId</label>
-        <input name="tarifarioId" />
+        <h1>Tarifario</h1>
+        <p>La lista de precios de Nodo. La <em>tarifa</em> es la referencia; el <em>precio</em> lo determina Cálculo para cada operación.</p>
     </div>
-    <div>
-        <label>TarifaId</label>
-        <input name="tarifaId" />
-    </div>
-    <div>
-        <label>Nuevo importe</label>
-        <input name="nuevoImporte" type="number" step="0.01" />
-    </div>
-    <div>
-        <label>Moneda</label>
-        <input name="moneda" value="BOB" />
-    </div>
-    <button type="submit">Actualizar</button>
-</form>
+    <span class="nodo-codigo">INV-01 · R-01</span>
+</div>
 
 @if (Model.Mensaje != null)
 {
-    <p>@Model.Mensaje</p>
+    <div class="alert alert-success">@Model.Mensaje</div>
 }
 @if (Model.Error != null)
 {
-    <p style="color:red">@Model.Error</p>
+    <div class="alert alert-danger">@Model.Error</div>
 }
+
+@if (!esDireccion)
+{
+    <div class="alert alert-warning">
+        Solo <strong>Dirección</strong> puede modificar tarifas (INV-01).
+        @if (User.Identity?.IsAuthenticated == true)
+        {
+            <span>Con tu rol actual el dominio rechazará el cambio; puedes intentarlo para verlo.</span>
+        }
+        else
+        {
+            <span><a asp-page="/Login">Inicia sesión</a> como Dirección para probarlo.</span>
+        }
+    </div>
+}
+
+@if (Model.Tarifarios.Count == 0)
+{
+    <div class="alert alert-light border">No hay tarifas registradas. En Development se cargan solas al arrancar si la base está vacía.</div>
+}
+
+@foreach (var tarifario in Model.Tarifarios)
+{
+    foreach (var grupo in tarifario.Tarifas.GroupBy(t => t.TipoRecurso).OrderBy(g => g.Key))
+    {
+        <div class="card mb-4">
+            <div class="card-header d-flex justify-content-between">
+                <span>@Formato.TipoRecurso(grupo.Key)</span>
+                <span class="text-secondary small fw-normal">@grupo.Count() tarifas</span>
+            </div>
+            <div class="table-responsive">
+                <table class="table mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Franja</th>
+                            <th>Condición</th>
+                            <th class="text-end">Tarifa base</th>
+                            <th style="width: 18rem">Nuevo importe</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var tarifa in grupo.OrderBy(t => t.Temporada != null).ThenBy(t => t.Franja.Inicio))
+                        {
+                            <tr>
+                                <td>@Formato.Horario(tarifa.Franja.Inicio, tarifa.Franja.Fin)</td>
+                                <td>
+                                    @if (tarifa.EsHoraPico)
+                                    {
+                                        <span class="badge text-bg-warning">Hora pico</span>
+                                    }
+                                    @if (tarifa.Temporada != null)
+                                    {
+                                        <span class="badge text-bg-info">Temporada @tarifa.Temporada.Inicio.ToString("dd/MM/yyyy") – @tarifa.Temporada.Fin.ToString("dd/MM/yyyy")</span>
+                                    }
+                                    @if (!tarifa.EsHoraPico && tarifa.Temporada == null)
+                                    {
+                                        <span class="badge text-bg-light border">Horario normal</span>
+                                    }
+                                </td>
+                                <td class="text-end fw-semibold">@Formato.Importe(tarifa.TarifaBase)</td>
+                                <td>
+                                    <form method="post" asp-page-handler="Actualizar" class="d-flex gap-2">
+                                        <input type="hidden" name="tarifarioId" value="@tarifario.Id" />
+                                        <input type="hidden" name="tarifaId" value="@tarifa.Id" />
+                                        <input type="hidden" name="moneda" value="@tarifa.TarifaBase.Currency" />
+                                        <div class="input-group input-group-sm">
+                                            <input name="nuevoImporte" type="number" step="0.01" min="0" class="form-control"
+                                                   value="@tarifa.TarifaBase.Amount.ToString("0.00")" aria-label="Nuevo importe" required />
+                                            <span class="input-group-text">@tarifa.TarifaBase.Currency</span>
+                                        </div>
+                                        <button type="submit" class="btn btn-sm @(esDireccion ? "btn-primary" : "btn-outline-secondary")">Guardar</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    }
+}
+
+<p class="text-secondary small">
+    Las reservas confirmadas y las cotizaciones vigentes conservan su precio aunque la tarifa cambie (INV-02, INV-04).
+</p>

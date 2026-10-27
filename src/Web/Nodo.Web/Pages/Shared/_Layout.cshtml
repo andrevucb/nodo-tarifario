@@ -1,45 +1,65 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Nodo.Web</title>
+    <title>@ViewData["Title"] · Nodo</title>
     <script type="importmap"></script>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/Nodo.Web.styles.css" asp-append-version="true" />
 </head>
+@{
+    var paginaActual = ViewContext.RouteData.Values["page"]?.ToString() ?? "";
+    string Activa(string prefijo) => paginaActual.StartsWith(prefijo) ? "active" : "";
+    var rol = User.FindFirst(System.Security.Claims.ClaimTypes.Role)?.Value;
+}
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-md navbar-dark nodo-navbar mb-4">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-page="/Index">Nodo.Web</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
+                <a class="navbar-brand d-flex align-items-baseline gap-2" asp-page="/Index">
+                    <span class="fw-bold">Nodo</span>
+                    <span class="nodo-brand-sub">Tarifas y precios</span>
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuPrincipal"
+                        aria-controls="menuPrincipal" aria-expanded="false" aria-label="Abrir menú">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
-                        </li>
+                <div class="collapse navbar-collapse" id="menuPrincipal">
+                    <ul class="navbar-nav me-auto">
+                        <li class="nav-item"><a class="nav-link @Activa("/Tarifario")" asp-page="/Tarifario/Index">Tarifario</a></li>
+                        <li class="nav-item"><a class="nav-link @Activa("/Calculo")" asp-page="/Calculo/Index">Cálculo de precio</a></li>
+                        <li class="nav-item"><a class="nav-link @Activa("/Cotizaciones")" asp-page="/Cotizaciones/Index">Cotizaciones</a></li>
                     </ul>
+                    @if (User.Identity?.IsAuthenticated == true)
+                    {
+                        <div class="d-flex align-items-center gap-2">
+                            <span class="text-white-50 small">@User.Identity.Name</span>
+                            <span class="badge @(rol == "Direccion" ? "text-bg-warning" : "text-bg-light")">@(rol == "Direccion" ? "Dirección" : rol)</span>
+                            <form method="post" asp-page="/Login" asp-page-handler="Salir" class="m-0">
+                                <button type="submit" class="btn btn-sm btn-outline-light">Salir</button>
+                            </form>
+                        </div>
+                    }
+                    else
+                    {
+                        <a class="btn btn-sm btn-outline-light" asp-page="/Login">Iniciar sesión</a>
+                    }
                 </div>
             </div>
         </nav>
     </header>
+
     <div class="container">
-        <main role="main" class="pb-3">
+        <main role="main" class="pb-5">
             @RenderBody()
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
+    <footer class="border-top footer text-muted small">
         <div class="container">
-            &copy; 2026 - Nodo.Web - <a asp-area="" asp-page="/Privacy">Privacy</a>
+            Nodo · subdominio Tarifas y precios · Maestría DDD 2026
         </div>
     </footer>
 

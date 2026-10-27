@@ -6,8 +6,6 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 public class LoginModel : PageModel
 {
-    public string? Mensaje { get; set; }
-
     public void OnGet() { }
 
     public async Task<IActionResult> OnPost(string usuarioId, string rol)
@@ -23,7 +21,12 @@ public class LoginModel : PageModel
         var principal = new ClaimsPrincipal(identity);
 
         await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
-        Mensaje = $"Sesión iniciada como {usuarioId} con rol {rol}";
-        return Page();
+        return RedirectToPage("/Index");
+    }
+
+    public async Task<IActionResult> OnPostSalir()
+    {
+        await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+        return RedirectToPage("/Index");
     }
 }
