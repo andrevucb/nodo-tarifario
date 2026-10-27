@@ -1,0 +1,68 @@
+@page
+@model Nodo.Web.Pages.Cotizaciones.IndexModel
+@{
+    ViewData["Title"] = "Cotizaciones";
+}
+
+<h2>Cotizaciones</h2>
+
+<h3>Emitir cotización</h3>
+<form method="post" asp-page-handler="Emitir">
+    <div>
+        <label>ClienteId</label>
+        <input name="clienteId" value="11111111-1111-1111-1111-111111111111" />
+    </div>
+    <div>
+        <label>RecursoId</label>
+        <input name="recursoId" value="aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa" />
+    </div>
+    <div>
+        <label>Horas</label>
+        <input name="horas" type="number" value="6" />
+    </div>
+    <div>
+        <label>Fecha/Hora Inicio</label>
+        <input name="fechaHoraInicio" type="datetime-local" value="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm")" />
+    </div>
+    <div>
+        <label>ClienteId para plan</label>
+        <input name="clienteIdParaPlan" value="11111111-1111-1111-1111-111111111111" />
+    </div>
+    <button type="submit">Emitir</button>
+</form>
+
+<h3>Listar cotizaciones</h3>
+<table border="1">
+    <tr><th>Id</th><th>Cliente</th><th>Recurso</th><th>Precio</th><th>Estado</th><th>Emisión</th><th>Vencimiento</th><th>Acciones</th></tr>
+    @foreach (var c in Model.Cotizaciones)
+    {
+        <tr>
+            <td>@c.Id</td>
+            <td>@c.ClienteId</td>
+            <td>@c.RecursoId</td>
+            <td>@c.PrecioOfrecido.Amount @c.PrecioOfrecido.Currency</td>
+            <td>@c.Estado</td>
+            <td>@c.Vigencia.Emision</td>
+            <td>@c.Vigencia.Vencimiento</td>
+            <td>
+                <form method="post" asp-page-handler="Aceptar" style="display:inline">
+                    <input type="hidden" name="cotizacionId" value="@c.Id" />
+                    <button type="submit">Aceptar</button>
+                </form>
+                <form method="post" asp-page-handler="Caducar" style="display:inline">
+                    <input type="hidden" name="cotizacionId" value="@c.Id" />
+                    <button type="submit">Marcar caducada</button>
+                </form>
+            </td>
+        </tr>
+    }
+</table>
+
+@if (Model.Mensaje != null)
+{
+    <p>@Model.Mensaje</p>
+}
+@if (Model.Error != null)
+{
+    <p style="color:red">@Model.Error</p>
+}

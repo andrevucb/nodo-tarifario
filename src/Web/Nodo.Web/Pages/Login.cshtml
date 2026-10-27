@@ -1,0 +1,27 @@
+@page
+@model LoginModel
+@{
+    ViewData["Title"] = "Login";
+}
+
+<h2>Simular autenticación por claims</h2>
+
+<form method="post">
+    <div>
+        <label>Usuario ID</label>
+        <input name="UsuarioId" value="usr-001" />
+    </div>
+    <div>
+        <label>Rol</label>
+        <select name="Rol">
+            <option value="Usuario">Usuario</option>
+            <option value="Direccion">Direccion</option>
+        </select>
+    </div>
+    <button type="submit">Iniciar sesión</button>
+</form>
+
+@if (Model.Mensaje != null)
+{
+    <p>@Model.Mensaje</p>
+}

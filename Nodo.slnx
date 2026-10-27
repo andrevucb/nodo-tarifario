@@ -1,0 +1,19 @@
+<Solution>
+  <Folder Name="/src/" />
+  <Folder Name="/src/Modules/" />
+  <Folder Name="/src/Modules/CalculoPrecioTotal/">
+    <Project Path="src/Modules/CalculoPrecioTotal/Nodo.CalculoPrecioTotal/Nodo.CalculoPrecioTotal.csproj" />
+  </Folder>
+  <Folder Name="/src/Modules/Cotizaciones/">
+    <Project Path="src/Modules/Cotizaciones/Nodo.Cotizaciones/Nodo.Cotizaciones.csproj" />
+  </Folder>
+  <Folder Name="/src/Modules/Tarifario/">
+    <Project Path="src/Modules/Tarifario/Nodo.Tarifario/Nodo.Tarifario.csproj" />
+  </Folder>
+  <Folder Name="/src/Shared/">
+    <Project Path="src/Shared/Nodo.SharedKernel/Nodo.SharedKernel.csproj" />
+  </Folder>
+  <Folder Name="/src/Web/">
+    <Project Path="src/Web/Nodo.Web/Nodo.Web.csproj" />
+  </Folder>
+</Solution>
