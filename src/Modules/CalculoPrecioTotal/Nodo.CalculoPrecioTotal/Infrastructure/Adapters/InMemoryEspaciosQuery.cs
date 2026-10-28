@@ -8,8 +8,12 @@ public class InMemoryEspaciosQuery : IEspaciosQuery
 
     public InMemoryEspaciosQuery()
     {
-        _recursos[Guid.Parse("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa")] = new RecursoInfo(Guid.Parse("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"), "SalaReuniones", 6);
-        _recursos[Guid.Parse("bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb")] = new RecursoInfo(Guid.Parse("bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb"), "SalonEventos", 50);
+        _recursos[Guid.Parse("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa")] =
+            new RecursoInfo(Guid.Parse("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"), "SalaReuniones", 6);
+        _recursos[Guid.Parse("bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb")] =
+            new RecursoInfo(Guid.Parse("bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb"), "SalonEventos", 50);
+        _recursos[Guid.Parse("cccccccc-cccc-cccc-cccc-cccccccccccc")] =
+            new RecursoInfo(Guid.Parse("cccccccc-cccc-cccc-cccc-cccccccccccc"), "EscritorioFlexible", 1);
     }
 
     public Task<RecursoInfo?> ObtenerRecursoAsync(Guid recursoId, CancellationToken ct = default) =>
