@@ -9,7 +9,6 @@ public static class CalculoPrecioTotalModule
 {
     public static IServiceCollection AddCalculoPrecioTotalModule(this IServiceCollection services)
     {
-        services.AddSingleton<ITarifasQuery, InMemoryTarifasQuery>();
         services.AddSingleton<IMembresiasQuery, InMemoryMembresiasQuery>();
         services.AddSingleton<IEspaciosQuery, InMemoryEspaciosQuery>();
         services.AddScoped<ServicioCalculoPrecio>();

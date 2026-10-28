@@ -4,6 +4,8 @@ using Nodo.CalculoPrecioTotal;
 using Nodo.Cotizaciones;
 using Nodo.SharedKernel;
 using Nodo.Tarifario;
+using Nodo.CalculoPrecioTotal.Domain.Contracts;
+using Nodo.Web.Infrastructure;
 
 // Cultura fija: los importes de los formularios llegan con punto decimal en cualquier sistema operativo.
 CultureInfo.DefaultThreadCurrentCulture = CultureInfo.InvariantCulture;
@@ -16,6 +18,7 @@ var conn = builder.Configuration.GetConnectionString("Default") ?? "Data Source=
 builder.Services.AddSharedKernel();
 builder.Services.AddTarifarioModule(conn);
 builder.Services.AddCalculoPrecioTotalModule();
+builder.Services.AddScoped<ITarifasQuery, EfTarifasQuery>();
 builder.Services.AddCotizacionesModule(conn);
 
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
