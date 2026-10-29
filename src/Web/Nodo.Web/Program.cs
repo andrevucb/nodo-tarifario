@@ -2,8 +2,10 @@ using System.Globalization;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Nodo.CalculoPrecioTotal;
 using Nodo.Cotizaciones;
+using Nodo.Cotizaciones.Domain.Events;
 using Nodo.SharedKernel;
 using Nodo.Tarifario;
+using Nodo.Tarifario.Domain.Events;
 using Nodo.CalculoPrecioTotal.Domain.Contracts;
 using Nodo.Web.Infrastructure;
 
@@ -20,6 +22,11 @@ builder.Services.AddTarifarioModule(conn);
 builder.Services.AddCalculoPrecioTotalModule();
 builder.Services.AddScoped<ITarifasQuery, EfTarifasQuery>();
 builder.Services.AddCotizacionesModule(conn);
+builder.Services.AddScoped<DomainEventToastNotifications>();
+builder.Services.AddScoped<IDomainEventHandler<CotizacionEmitida>, CotizacionEmitidaToastHandler>();
+builder.Services.AddScoped<IDomainEventHandler<CotizacionAceptada>, CotizacionAceptadaToastHandler>();
+builder.Services.AddScoped<IDomainEventHandler<CotizacionCaducada>, CotizacionCaducadaToastHandler>();
+builder.Services.AddScoped<IDomainEventHandler<TarifaActualizada>, TarifaActualizadaToastHandler>();
 
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>

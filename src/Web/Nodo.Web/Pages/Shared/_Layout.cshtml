@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using Nodo.Web.Infrastructure
+@inject DomainEventToastNotifications DomainEventToasts
+<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="utf-8" />
@@ -57,6 +59,22 @@
         </main>
     </div>
 
+    @if (DomainEventToasts.Notifications.Count > 0)
+    {
+        <div class="toast-container position-fixed top-0 end-0 p-3" aria-live="polite" aria-atomic="true">
+            @foreach (var notification in DomainEventToasts.Notifications)
+            {
+                <div class="toast" role="status" data-bs-autohide="true">
+                    <div class="toast-header">
+                        <strong class="me-auto">@notification.Title</strong>
+                        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Cerrar"></button>
+                    </div>
+                    <div class="toast-body">@notification.Message</div>
+                </div>
+            }
+        </div>
+    }
+
     <footer class="border-top footer text-muted small">
         <div class="container">
             Nodo · subdominio Tarifas y precios · Maestría DDD 2026
@@ -65,6 +83,9 @@
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.querySelectorAll('.toast').forEach(element => bootstrap.Toast.getOrCreateInstance(element).show());
+    </script>
     <script src="~/js/site.js" asp-append-version="true"></script>
 
     @await RenderSectionAsync("Scripts", required: false)
