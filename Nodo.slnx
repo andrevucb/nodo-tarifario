@@ -8,6 +8,7 @@
     <Project Path="src/Modules/Cotizaciones/Nodo.Cotizaciones/Nodo.Cotizaciones.csproj" />
   </Folder>
   <Folder Name="/src/Modules/Tarifario/">
+    <Project Path="src/Modules/Tarifario/Nodo.Tarifario.Contracts/Nodo.Tarifario.Contracts.csproj" />
     <Project Path="src/Modules/Tarifario/Nodo.Tarifario/Nodo.Tarifario.csproj" />
   </Folder>
   <Folder Name="/src/Shared/">

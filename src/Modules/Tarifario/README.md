@@ -18,14 +18,15 @@ La raíz del agregado es quien autoriza el cambio: si el solicitante no tiene el
 
 ## 4. Colaboraciones
 
-Entrega referencias a Cálculo (L-01) mediante el contrato `ITarifasQuery`; en el prototipo lo implementa `EfTarifasQuery` en `Nodo.Web`, leyendo `TarifarioDbContext`. Solicita avisos a Notificaciones (T-01), aunque la integración real todavía no existe: hoy el evento solo se muestra como notificación de la interfaz. No calcula el importe de cada operación ni factura. Ver el [context map](../../../docs/05-context-map.md).
+Entrega referencias a Cálculo (L-01) mediante el contrato `ITarifasQuery`, publicado en `Nodo.Tarifario.Contracts` e implementado por `EfTarifasQuery` en la infraestructura del módulo, que lee `TarifarioDbContext`. Solicita avisos a Notificaciones (T-01), aunque la integración real todavía no existe: hoy el evento solo se muestra como notificación de la interfaz. No calcula el importe de cada operación ni factura. Ver el [context map](../../../docs/05-context-map.md).
 
 ## 5. Estado de implementación
 
 - **Proyecto:** `src/Modules/Tarifario/Nodo.Tarifario`.
+- **Contratos publicados:** `src/Modules/Tarifario/Nodo.Tarifario.Contracts` contiene `ITarifasQuery` y `TarifaAplicable`; Cálculo depende de este contrato, no del módulo Tarifario.
 - **Dominio:** agregado `Tarifario`, entidad `Tarifa`, VOs `Franja` y `Temporada`, contrato `IRepositorioTarifario` y evento `TarifaActualizada`.
 - **Aplicación:** `ServicioActualizarTarifa`.
-- **Infraestructura:** EF Core sobre SQLite, esquema `tarifario`, configuración de entidades y `EfRepositorioTarifario`.
+- **Infraestructura:** EF Core sobre SQLite, esquema `tarifario`, configuración de entidades, `EfRepositorioTarifario` y `EfTarifasQuery` en `Infrastructure/Queries`.
 - **Migraciones:** `20261027042048_Initial`.
 - **Datos de demostración:** `TarifarioSeed` crea tarifas para `SalaReuniones`, `SalonEventos` y `EscritorioFlexible`, con variantes de horario normal, hora pico y temporada alta.
 - **Presentación:** página `/Tarifario` en `src/Web/Nodo.Web/Pages/Tarifario`.
@@ -65,12 +66,14 @@ Si el rol no es `Direccion` (comparación sin distinguir mayúsculas) o la tarif
 | `Franja` | `Inicio`, `Fin` (`TimeOnly`) | Exige `Fin > Inicio` y determina si una hora cae dentro de la franja con `Cubre(hora)`. |
 | `Temporada` | `Inicio`, `Fin` (`DateOnly`) | Exige `Fin >= Inicio` y determina si una fecha pertenece a la temporada con `Cubre(fecha)`. |
 
-### 6.4 Repositorio
+### 6.4 Repositorio y contrato publicado
 
 | Componente | Tipo | Responsabilidad |
 |---|---|---|
 | `IRepositorioTarifario` | Repository (contrato de dominio) | `ObtenerPorIdAsync(tarifarioId, ct)` y `GuardarAsync(tarifario, ct)`. |
 | `EfRepositorioTarifario` | Implementación de infraestructura | Recupera el agregado con sus tarifas (`Include`) y persiste los cambios con EF Core. |
+| `ITarifasQuery` | Contrato publicado (`Nodo.Tarifario.Contracts`) | `ObtenerTarifaAplicableAsync(tipoRecurso, fechaHora, ct)` para los consumidores de tarifas. |
+| `EfTarifasQuery` | Adaptador de infraestructura (`Infrastructure/Queries`) | Lee `TarifarioDbContext`, filtra por tipo, franja y temporada, y devuelve `TarifaAplicable`. |
 
 ## 7. Servicio de aplicación
 
@@ -152,7 +155,7 @@ El guardado y el despacho de eventos no comparten una transacción explícita ni
 - No se valida que no existan tarifas duplicadas al agregarlas.
 - El despacho de eventos ocurre después de guardar y no es transaccional.
 - No hay pruebas automatizadas para INV-01 ni para la conservación del precio de reservas.
-- Sigue pendiente cómo combinar temporada y hora pico cuando coinciden (decisión pendiente 1 del modelo táctico); la selección actual está en `EfTarifasQuery`.
+- Sigue pendiente cómo combinar temporada y hora pico cuando coinciden (decisión pendiente 1 del modelo táctico); la selección actual está en `EfTarifasQuery`, dentro de `Infrastructure/Queries`.
 
 ## 11. Referencias
 

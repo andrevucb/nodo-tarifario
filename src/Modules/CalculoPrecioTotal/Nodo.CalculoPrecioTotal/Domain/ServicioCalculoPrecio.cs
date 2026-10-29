@@ -1,5 +1,6 @@
 using Nodo.SharedKernel;
 using Nodo.CalculoPrecioTotal.Domain.Contracts;
+using Nodo.Tarifario.Contracts;
 
 namespace Nodo.CalculoPrecioTotal.Domain;
 

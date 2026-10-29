@@ -17,6 +17,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\Shared\Nodo.SharedKernel\Nodo.SharedKernel.csproj" />
+    <ProjectReference Include="..\Nodo.Tarifario.Contracts\Nodo.Tarifario.Contracts.csproj" />
   </ItemGroup>
 
 </Project>

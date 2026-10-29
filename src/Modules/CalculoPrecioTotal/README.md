@@ -27,8 +27,8 @@ La colaboración con Cotizaciones es directa: `ServicioCotizacion` llama a `Serv
 - **Proyecto:** `src/Modules/CalculoPrecioTotal/Nodo.CalculoPrecioTotal`.
 - **Dominio:** `ServicioCalculoPrecio`, VOs `Horas`, `Descuento` y `DesglosePrecio`, y contratos de consulta en `Domain/Contracts`.
 - **Sin agregado, entidades, repositorio, DbContext ni migraciones:** calcular un precio no persiste estado.
-- **Adaptadores de infraestructura:** `InMemoryMembresiasQuery` e `InMemoryEspaciosQuery` están registrados por el módulo. `InMemoryTarifasQuery` existe, pero no está registrado.
-- **Integración con Tarifario:** `ITarifasQuery` se registra en `Nodo.Web` mediante `EfTarifasQuery`, que lee la base de datos de Tarifario.
+- **Adaptadores de infraestructura:** `InMemoryMembresiasQuery` e `InMemoryEspaciosQuery` están registrados por el módulo. `InMemoryTarifasQuery` se eliminó porque Tarifario ya aporta la implementación real.
+- **Integración con Tarifario:** `ITarifasQuery` es un contrato publicado en `Nodo.Tarifario.Contracts`; lo implementa `EfTarifasQuery` en `Nodo.Tarifario.Infrastructure/Queries` y se registra desde `AddTarifarioModule`.
 - **Presentación:** página `/Calculo` en `src/Web/Nodo.Web/Pages/Calculo`; llama directamente al servicio de dominio.
 - **Eventos:** no emite eventos de dominio.
 - **Pruebas:** no hay un proyecto de pruebas automatizadas; las pruebas de INV-06 e INV-07 siguen pendientes.
@@ -62,7 +62,7 @@ No hay entidades propias. `RecursoInfo`, `PlanInfo` y `TarifaAplicable` son dato
 
 | Contrato | Datos que entrega | Implementación actual |
 |---|---|---|
-| `ITarifasQuery` | `TarifaAplicable`: tarifa y tarifario, tipo de recurso, hora pico, franja, temporada y `TarifaBase`. | `EfTarifasQuery` en `Nodo.Web`; `InMemoryTarifasQuery` existe pero no se registra. |
+| `ITarifasQuery` | `TarifaAplicable`: tarifa y tarifario, tipo de recurso, hora pico, franja, temporada y `TarifaBase`. | Contrato en `Nodo.Tarifario.Contracts`; `EfTarifasQuery` en `Nodo.Tarifario.Infrastructure/Queries`, registrado por `AddTarifarioModule`. |
 | `IMembresiasQuery` | `PlanInfo`: código de plan, horas incluidas y porcentaje de descuento. | `InMemoryMembresiasQuery`. |
 | `IEspaciosQuery` | `RecursoInfo`: identificador, tipo de recurso y capacidad. | `InMemoryEspaciosQuery`. |
 
@@ -143,7 +143,7 @@ Tampoco se publican eventos de integración hacia Facturación, Reservas o Agend
 - R-03 no está implementado: `Aforo` y `ServiciosExtra` se aceptan en la solicitud, pero el servicio los ignora.
 - `Horas` y `Descuento` existen como VOs, pero el servicio usa `int` y `decimal`; por eso no valida horas negativas.
 - El descuento se aplica a cualquier plan, no solo al plan de equipo, y `PlanInfo.PlanCodigo` no se utiliza.
-- `InMemoryTarifasQuery` no está registrado. `AddCalculoPrecioTotalModule` tampoco registra `ITarifasQuery`; el módulo solo funciona cuando la Web aporta `EfTarifasQuery`.
+- `ITarifasQuery` se publica desde `Nodo.Tarifario.Contracts` y se registra en `AddTarifarioModule`; Cálculo necesita que el módulo Tarifario esté registrado en el host. No hay una dependencia directa entre los proyectos Cálculo y Tarifario.
 - No hay Application Service; la presentación llama directamente al servicio de dominio.
 - No existe una regla para combinar temporada y hora pico (decisión pendiente 1 del modelo táctico).
 - La base del descuento y el posible 5 % adicional siguen pendientes (decisión pendiente 2); hoy se aplica sobre el importe bruto de las horas adicionales.

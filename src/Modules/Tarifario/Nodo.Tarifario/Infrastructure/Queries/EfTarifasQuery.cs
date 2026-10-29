@@ -1,8 +1,8 @@
 using Microsoft.EntityFrameworkCore;
-using Nodo.CalculoPrecioTotal.Domain.Contracts;
+using Nodo.Tarifario.Contracts;
 using Nodo.Tarifario.Infrastructure;
 
-namespace Nodo.Web.Infrastructure;
+namespace Nodo.Tarifario.Infrastructure.Queries;
 
 public sealed class EfTarifasQuery(TarifarioDbContext context) : ITarifasQuery
 {
