@@ -82,13 +82,13 @@ Quedan abiertas la combinación de temporada y hora pico, la acumulación de hor
 | [0001](decisiones/0001-frontera-tarifario-calculo.md) | Separar la administración de tarifas del cálculo de una operación |
 | [0002](decisiones/0002-clasificacion-del-area.md) | Reservas como Core y Tarifas y precios como Supporting |
 | [0003](decisiones/0003-frontera-calculo-cotizaciones.md) | Separar el cálculo del ciclo de vida de una propuesta |
-| [0004](decisiones/0004-hotspots-y-validacion.md) | Mantener las preguntas pendientes para las Sesiones 4 y 5 |
+| [0004](decisiones/0004-hotspots-y-validacion.md) | Preguntas para resolver con el experto del dominio |
 
-El esqueleto provisional contiene [Tarifario](src/tarifario/README.md), [Cálculo de precio total](src/calculo-precio-total/README.md) y [Cotizaciones](src/cotizaciones/README.md). Cada carpeta describe qué modela y su lenguaje, sin código.
+Contiene [Tarifario](src/Modules/Tarifario/README.md), [Cálculo de precio total](src/Modules/CalculoPrecioTotal/README.md) y [Cotizaciones](src/Modules/Cotizaciones/README.md). Cada carpeta describe qué modela y su lenguaje.
 
 ## 10. Estado del proyecto
 
-**Diseño estratégico hasta la Sesión 3.** En la Sesión 4 se discutirán las relaciones entre contextos y las preguntas de integración. En las Sesiones 5 y 6 se continuará con el desarrollo del proyecto.
+**Diseño completo.** Incluye aplicación de prueba.
 
 ## 11. Integrantes y roles
 

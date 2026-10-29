@@ -1,6 +1,6 @@
 using Nodo.SharedKernel;
 
-namespace Nodo.CalculoPrecioTotal.Domain.Contracts;
+namespace Nodo.Tarifario.Contracts;
 
 public record TarifaAplicable(Guid TarifaId, Guid TarifarioId, string TipoRecurso, bool EsHoraPico, TimeOnly FranjaInicio, TimeOnly FranjaFin, DateOnly? TemporadaInicio, DateOnly? TemporadaFin, Money TarifaBase);
 

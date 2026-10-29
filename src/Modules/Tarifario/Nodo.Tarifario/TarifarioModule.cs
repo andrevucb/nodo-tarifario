@@ -1,8 +1,10 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Nodo.Tarifario.Application;
+using Nodo.Tarifario.Contracts;
 using Nodo.Tarifario.Domain;
 using Nodo.Tarifario.Infrastructure;
+using Nodo.Tarifario.Infrastructure.Queries;
 using Nodo.Tarifario.Infrastructure.Repositories;
 
 namespace Nodo.Tarifario;
@@ -16,6 +18,7 @@ public static class TarifarioModule
                 sqlite.MigrationsHistoryTable("__EFMigrationsHistory", "tarifario")));
 
         services.AddScoped<IRepositorioTarifario, EfRepositorioTarifario>();
+        services.AddScoped<ITarifasQuery, EfTarifasQuery>();
         services.AddScoped<ServicioActualizarTarifa>();
         return services;
     }

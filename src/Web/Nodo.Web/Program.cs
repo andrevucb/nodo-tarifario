@@ -6,7 +6,6 @@ using Nodo.Cotizaciones.Domain.Events;
 using Nodo.SharedKernel;
 using Nodo.Tarifario;
 using Nodo.Tarifario.Domain.Events;
-using Nodo.CalculoPrecioTotal.Domain.Contracts;
 using Nodo.Web.Infrastructure;
 
 // Cultura fija: los importes de los formularios llegan con punto decimal en cualquier sistema operativo.
@@ -20,7 +19,6 @@ var conn = builder.Configuration.GetConnectionString("Default") ?? "Data Source=
 builder.Services.AddSharedKernel();
 builder.Services.AddTarifarioModule(conn);
 builder.Services.AddCalculoPrecioTotalModule();
-builder.Services.AddScoped<ITarifasQuery, EfTarifasQuery>();
 builder.Services.AddCotizacionesModule(conn);
 builder.Services.AddScoped<DomainEventToastNotifications>();
 builder.Services.AddScoped<IDomainEventHandler<CotizacionEmitida>, CotizacionEmitidaToastHandler>();
