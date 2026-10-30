@@ -1,5 +1,7 @@
 # Diseño estratégico del subdominio *Tarifas y precios*
 
+Para instalar los requisitos y ejecutar la aplicación, consulta el [README de instalación](README-INSTALACION.md).
+
 ## 1. ¿Qué es Nodo y cuál es nuestra área?
 
 Nodo ofrece espacios de coworking, salas de reuniones y ambientes para eventos. Su operación coordina reservas, membresías, eventos, precios, facturación y control de acceso.
